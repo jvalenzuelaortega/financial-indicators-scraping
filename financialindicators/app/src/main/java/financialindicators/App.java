@@ -3,12 +3,32 @@
  */
 package financialindicators;
 
+import java.io.IOException;
+
+import org.jsoup.nodes.Document;
+
+import financialindicators.config.JsoupConfig;
+import financialindicators.utils.StringUtils;
+
 public class App {
     public String getGreeting() {
         return "Hello World!";
     }
 
     public static void main(String[] args) {
-        System.out.println(new App().getGreeting());
+        
+        try {
+			Document doc = JsoupConfig.getConnection();
+			String content = JsoupConfig.getElementBySite(doc, "vd");
+			
+			System.out.println("lenght -> " + StringUtils.lengthString(content));
+			
+			System.out.println(content);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+        
     }
 }

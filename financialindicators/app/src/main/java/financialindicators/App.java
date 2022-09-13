@@ -4,11 +4,13 @@
 package financialindicators;
 
 import java.io.IOException;
+import java.time.LocalDate;
 
+import financialindicators.dto.Dollar;
 import org.jsoup.nodes.Document;
 
 import financialindicators.config.JsoupConfig;
-import financialindicators.utils.StringUtils;
+import financialindicators.utils.TextUtils;
 
 public class App {
     public String getGreeting() {
@@ -16,19 +18,28 @@ public class App {
     }
 
     public static void main(String[] args) {
-        
+
         try {
-			Document doc = JsoupConfig.getConnection();
-			String content = JsoupConfig.getElementBySite(doc, "vd");
-			
-			System.out.println("lenght -> " + StringUtils.lengthString(content));
-			
-			System.out.println(content);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        
-        
+            Document doc = JsoupConfig.getConnection();
+            String content = JsoupConfig.getElementBySite(doc, "vd");
+
+            System.out.println("Split content -> " + TextUtils.splitText(content, 10, 16));
+            Double valueIndicator = Double.valueOf(TextUtils.splitText(content, 10, 16));
+
+            Dollar dollar = new Dollar();
+            dollar.setIndicatorId(1);
+            dollar.setNameIndicator("Dollar");
+            dollar.setValueIndicator(valueIndicator);
+            dollar.setDateIndicator(LocalDate.now());
+            dollar.setLotIndicator(1);
+
+            System.out.println("Indicator values -> " + dollar.toString());
+
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+
     }
 }

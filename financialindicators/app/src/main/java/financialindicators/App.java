@@ -4,13 +4,11 @@
 package financialindicators;
 
 import java.io.IOException;
-import java.time.LocalDate;
+import java.util.HashMap;
 
-import financialindicators.dto.Dollar;
 import org.jsoup.nodes.Document;
 
 import financialindicators.config.JsoupConfig;
-import financialindicators.utils.TextUtils;
 
 public class App {
     public String getGreeting() {
@@ -19,21 +17,26 @@ public class App {
 
     public static void main(String[] args) {
 
+        HashMap<String, String> indicatorsMap = new HashMap<>();
+
         try {
-            Document doc = JsoupConfig.getConnection();
-            String content = JsoupConfig.getElementBySite(doc, "vd");
+            //TODO: dolar
+            Document dolarDocument = JsoupConfig.getConnection("https://valordeldolar.cl/");
+            String dolarContent = JsoupConfig.getElementBySite(dolarDocument, "vd");
 
-            System.out.println("Split content -> " + TextUtils.splitText(content, 10, 16));
-            Double valueIndicator = Double.valueOf(TextUtils.splitText(content, 10, 16));
+            //TODO: euro
+            Document euroDocument = JsoupConfig.getConnection("https://valordeleuro.cl/");
+            String ueroContent = JsoupConfig.getElementBySite(euroDocument, "vd");
 
-            Dollar dollar = new Dollar();
-            dollar.setIndicatorId(1);
-            dollar.setNameIndicator("Dollar");
-            dollar.setValueIndicator(valueIndicator);
-            dollar.setDateIndicator(LocalDate.now());
-            dollar.setLotIndicator(1);
+            //TODO: uf
+            Document ufDocument = JsoupConfig.getConnection("https://valoruf.cl/");
+            String ufContent = JsoupConfig.getElementBySite(ufDocument, "vpr");
 
-            System.out.println("Indicator values -> " + dollar.toString());
+            indicatorsMap.put("Dolar", dolarContent);
+            indicatorsMap.put("Euro", ueroContent);
+            indicatorsMap.put("UF", ufContent);
+
+            indicatorsMap.forEach((key, value) -> System.out.println(key + " " + value));
 
         } catch (IOException e) {
             // TODO Auto-generated catch block

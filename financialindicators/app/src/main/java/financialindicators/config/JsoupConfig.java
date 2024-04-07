@@ -8,9 +8,8 @@ import org.jsoup.select.Elements;
 
 public class JsoupConfig {
 	
-	public static Document getConnection() throws IOException {
-		Document doc = Jsoup.connect("https://valordeldolar.cl/").get();
-		return doc;
+	public static Document getConnection(String url) throws IOException {
+		return Jsoup.connect(url).get();
 	}
 	
 	public static String getElementBySite(Document doc, String element) {

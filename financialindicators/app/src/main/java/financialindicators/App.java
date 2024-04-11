@@ -4,16 +4,19 @@
 package financialindicators;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
+import financialindicators.dto.request.IndicatorRequestDto;
+import financialindicators.dto.response.IndicatorResponseDto;
+import financialindicators.services.FinancialIndicatorService;
+import financialindicators.services.MapperIndicatorService;
 import org.jsoup.nodes.Document;
 
 import financialindicators.config.JsoupConfig;
 
 public class App {
-    public String getGreeting() {
-        return "Hello World!";
-    }
 
     public static void main(String[] args) {
 
@@ -35,6 +38,21 @@ public class App {
             indicatorsMap.put("Dolar", dolarContent);
             indicatorsMap.put("Euro", ueroContent);
             indicatorsMap.put("UF", ufContent);
+
+            //
+            MapperIndicatorService mapperIndicatorService = new MapperIndicatorService();
+            IndicatorRequestDto indicatorRequestDto = mapperIndicatorService.buildIndicatorRequestDto("dollar", "vr");
+
+            FinancialIndicatorService financialIndicatorService = new FinancialIndicatorService();
+            IndicatorResponseDto dolarIndicator = financialIndicatorService.getIndicatorOfName(indicatorRequestDto);
+            //IndicatorResponseDto euroIndicator = financialIndicatorService.getIndicatorOfName("euro");
+            //IndicatorResponseDto ufIndicator = financialIndicatorService.getIndicatorOfName("uf");
+
+            List<IndicatorResponseDto> indicatorResponseDtos = new ArrayList<>();
+            indicatorResponseDtos.add(dolarIndicator);
+
+            indicatorResponseDtos.forEach(System.out::println);
+
 
             indicatorsMap.forEach((key, value) -> System.out.println(key + " " + value));
 

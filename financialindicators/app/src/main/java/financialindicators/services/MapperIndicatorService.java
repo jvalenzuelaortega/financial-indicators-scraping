@@ -1,19 +1,23 @@
 package financialindicators.services;
 
-import financialindicators.dto.request.IndicatorRequestDto;
+import financialindicators.dto.input.IndicatorInputDto;
 import financialindicators.enums.FinancialIndicatorEnum;
-import financialindicators.utils.SIteUtils;
+import financialindicators.utils.GeneralUtils;
 
 public class MapperIndicatorService {
 
-    public IndicatorRequestDto buildIndicatorRequestDto(String indicator, String domElement) {
-        IndicatorRequestDto indicatorRequestDto = new IndicatorRequestDto();
+    public IndicatorInputDto buildIndicatorRequestDto(String indicator, String domElement) {
+        IndicatorInputDto indicatorInputDto = new IndicatorInputDto();
         FinancialIndicatorEnum indicatorEnum = FinancialIndicatorEnum.getIndicatorByName(indicator);
 
-        indicatorRequestDto.setIndicator(indicatorEnum);
-        indicatorRequestDto.setIndicatorUrl(SIteUtils.getUrlByIndicator(indicatorEnum));
-        indicatorRequestDto.setDomElement(domElement);
-        indicatorRequestDto.setCharacter("=");
-        return indicatorRequestDto;
+        indicatorInputDto.setIndicator(indicatorEnum);
+        indicatorInputDto.setIndicatorUrl(GeneralUtils.getUrlByIndicator(indicatorEnum));
+        indicatorInputDto.setDomElement(domElement);
+        indicatorInputDto.setCharacter(buildCharacterForIndicator(indicatorEnum.name()));
+        return indicatorInputDto;
+    }
+
+    private String buildCharacterForIndicator(String indicator) {
+        return "DOLLAR".equals(indicator) || "EURO".equals(indicator) ? "=" : null;
     }
 }

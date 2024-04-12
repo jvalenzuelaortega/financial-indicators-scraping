@@ -1,8 +1,8 @@
-package financialindicators.dto.response;
+package financialindicators.dto.output;
 
 import java.time.LocalDate;
 
-public class IndicatorResponseDto {
+public class IndicatorOutputDto {
 
     private String indicatorName;
     private String value;

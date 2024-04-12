@@ -2,7 +2,7 @@ package financialindicators.utils;
 
 import financialindicators.enums.FinancialIndicatorEnum;
 
-public class SIteUtils {
+public class GeneralUtils {
 
     public static String getUrlByIndicator(FinancialIndicatorEnum financialIndicatorEnum) {
         return switch (financialIndicatorEnum) {

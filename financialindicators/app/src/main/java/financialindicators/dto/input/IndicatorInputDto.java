@@ -1,8 +1,8 @@
-package financialindicators.dto.request;
+package financialindicators.dto.input;
 
 import financialindicators.enums.FinancialIndicatorEnum;
 
-public class IndicatorRequestDto {
+public class IndicatorInputDto {
 
     private FinancialIndicatorEnum indicator;
     private String indicatorUrl;

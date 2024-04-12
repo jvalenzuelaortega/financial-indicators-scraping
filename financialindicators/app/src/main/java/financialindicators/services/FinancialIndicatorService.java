@@ -1,8 +1,8 @@
 package financialindicators.services;
 
 import financialindicators.config.JsoupSingletonConfig;
-import financialindicators.dto.request.IndicatorRequestDto;
-import financialindicators.dto.response.IndicatorResponseDto;
+import financialindicators.dto.input.IndicatorInputDto;
+import financialindicators.dto.output.IndicatorOutputDto;
 import financialindicators.utils.JsoupScrapingUtils;
 import financialindicators.utils.RegexUtils;
 import org.jsoup.nodes.Document;
@@ -12,16 +12,22 @@ import java.time.LocalDate;
 
 public class FinancialIndicatorService {
 
-    public IndicatorResponseDto getIndicatorOfName(IndicatorRequestDto indicatorRequestDto) throws IOException {
-        Document document = JsoupSingletonConfig.getInstance(indicatorRequestDto.getIndicatorUrl());
-        String dollarContent = JsoupScrapingUtils.getElementBySite(document, indicatorRequestDto.getDomElement());
-        String formated = RegexUtils.getValueOfText(dollarContent, indicatorRequestDto.getCharacter());
+    public IndicatorOutputDto getIndicatorOfName(IndicatorInputDto indicatorInputDto) {
+        IndicatorOutputDto indicatorOutputDto = new IndicatorOutputDto();
+        try {
+            Document document = JsoupSingletonConfig.getInstance(indicatorInputDto.getIndicatorUrl());
+            String elementContent = JsoupScrapingUtils.getElementBySite(document, indicatorInputDto.getDomElement());
+            String valueExtractedRegex = RegexUtils.getValueOfText(elementContent, indicatorInputDto.getCharacter());
 
-        IndicatorResponseDto indicatorResponseDto = new IndicatorResponseDto();
-        indicatorResponseDto.setIndicatorName(indicatorRequestDto.getIndicator().name());
-        indicatorResponseDto.setValue(formated);
-        indicatorResponseDto.setLocalDate(LocalDate.now());
+            indicatorOutputDto.setIndicatorName(indicatorInputDto.getIndicator().name());
+            indicatorOutputDto.setValue(valueExtractedRegex);
+            indicatorOutputDto.setLocalDate(LocalDate.now());
 
-        return indicatorResponseDto;
+            JsoupSingletonConfig.closeConnectionUrl();
+        } catch(IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        return indicatorOutputDto;
     }
 }

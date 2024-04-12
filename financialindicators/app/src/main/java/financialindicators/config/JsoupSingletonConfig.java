@@ -21,4 +21,10 @@ public class JsoupSingletonConfig {
         }
         return document;
     }
+
+    public static void closeConnectionUrl() {
+        if (document != null) {
+            document = null;
+        }
+    }
 }

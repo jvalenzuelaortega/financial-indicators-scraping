@@ -3,6 +3,7 @@ package financialindicators.services;
 import financialindicators.config.JsoupSingletonConfig;
 import financialindicators.dto.input.IndicatorInputDto;
 import financialindicators.dto.output.IndicatorOutputDto;
+import financialindicators.exceptions.UnknownSiteException;
 import financialindicators.utils.JsoupScrapingUtils;
 import financialindicators.utils.RegexUtils;
 import org.jsoup.nodes.Document;
@@ -25,7 +26,7 @@ public class FinancialIndicatorService {
 
             JsoupSingletonConfig.closeConnectionUrl();
         } catch(IOException e) {
-            throw new RuntimeException(e);
+            throw new UnknownSiteException(String.format("Error loading web page for Indicator %s", indicatorInputDto.getIndicator()), e);
         }
 
         return indicatorOutputDto;

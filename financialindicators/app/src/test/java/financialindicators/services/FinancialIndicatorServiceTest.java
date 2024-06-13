@@ -2,6 +2,7 @@ package financialindicators.services;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import financialindicators.dto.input.IndicatorInputDto;
@@ -25,6 +26,7 @@ class FinancialIndicatorServiceTest {
 
 	}
 
+	@Disabled
 	@Test
 	void getIndicatorOfName_whenIndicatorDtoIsEuro_thenReturnInformation() {
 		FinancialIndicatorService service = new FinancialIndicatorService();

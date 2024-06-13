@@ -17,17 +17,17 @@ public class App {
 
         MapperIndicatorService mapperIndicatorService = new MapperIndicatorService();
         IndicatorInputDto indicatorInputDollarDto = mapperIndicatorService.buildIndicatorRequestDto("dollar", "vd");
-        IndicatorInputDto indicatorInputEuroDto = mapperIndicatorService.buildIndicatorRequestDto("euro", "vd");
+        //IndicatorInputDto indicatorInputEuroDto = mapperIndicatorService.buildIndicatorRequestDto("euro", "vd");
         IndicatorInputDto indicatorInputUFDto = mapperIndicatorService.buildIndicatorRequestDto("uf", "vpr");
 
         FinancialIndicatorService financialIndicatorService = new FinancialIndicatorService();
         IndicatorOutputDto dollarIndicator = financialIndicatorService.getIndicatorOfName(indicatorInputDollarDto);
-        IndicatorOutputDto euroIndicator = financialIndicatorService.getIndicatorOfName(indicatorInputEuroDto);
+        //IndicatorOutputDto euroIndicator = financialIndicatorService.getIndicatorOfName(indicatorInputEuroDto);
         IndicatorOutputDto ufIndicator = financialIndicatorService.getIndicatorOfName(indicatorInputUFDto);
 
         List<IndicatorOutputDto> indicatorOutputList = new ArrayList<>();
         indicatorOutputList.add(dollarIndicator);
-        indicatorOutputList.add(euroIndicator);
+        //indicatorOutputList.add(euroIndicator);
         indicatorOutputList.add(ufIndicator);
 
         indicatorOutputList.forEach(System.out::println);

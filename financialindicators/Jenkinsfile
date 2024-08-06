@@ -1,0 +1,52 @@
+pipeline {
+    agent any
+
+    environment {
+        BASE_DIR = 'financialindicators'
+    }
+
+    stages {
+        stage('Build app') {
+            steps {
+                dir(BASE_DIR) {
+                    echo 'This is build app Stage'
+                }
+            }
+        }
+        stage('Test app') {
+            steps {
+                dir(BASE_DIR) {
+                    echo 'This is test app Stage'
+                }
+            }
+        }
+        stage('Checkstyle Code') {
+            steps {
+                dir(BASE_DIR) {
+                    echo 'This is checkstyle code stage'
+                }
+            }
+        }
+        stage('Coverage code') {
+            steps {
+                dir(BASE_DIR) {
+                    echo 'This is coverage code stage'
+                }
+            }
+        }
+        stage('Report coverage') {
+            steps {
+                dir(BASE_DIR) {
+                    echo 'This is report for coverage'
+                }
+            }
+        }
+        stage('Finish') {
+            steps {
+                dir(BASE_DIR) {
+                    echo 'Finish pipeline stage'
+                }
+            }
+        }
+    }
+}

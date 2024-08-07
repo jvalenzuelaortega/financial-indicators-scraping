@@ -23,7 +23,7 @@ pipeline {
         stage('Checkstyle Code') {
             steps {
                 dir(BASE_DIR) {
-                    echo 'This is checkstyle code stage'
+                    sh 'gradle check'
                 }
             }
         }
@@ -38,7 +38,7 @@ pipeline {
             steps {
                 dir(BASE_DIR) {
                     publishHTML(target: [
-                        reportName: 'Report for financialindicators app',
+                        reportName: 'Report for Financial Indicators App',
                         reportDir: 'app/build/reports/tests/test',
                         reportFiles: 'index.html',
                         keepAll: true,

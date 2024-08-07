@@ -30,14 +30,21 @@ pipeline {
         stage('Coverage code') {
             steps {
                 dir(BASE_DIR) {
-                    echo 'This is coverage code stage'
+                    sh 'gradle build jacocoTestReport'
                 }
             }
         }
         stage('Report coverage') {
             steps {
                 dir(BASE_DIR) {
-                    echo 'This is report for coverage'
+                    publishHTML(target: [
+                        reportName: 'Report for financialindicators app',
+                        reportDir: 'app/build/reports/tests/test',
+                        reportFiles: 'index.html',
+                        keepAll: true,
+                        alwaysLinkToLastBuild: true,
+                        allowMissing: false
+                    ])
                 }
             }
         }

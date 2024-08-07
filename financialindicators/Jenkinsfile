@@ -48,6 +48,13 @@ pipeline {
                 }
             }
         }
+        stage('Run application') {
+            steps {
+                dir(BASE_DIR) {
+                    sh 'gradle run'
+                }
+            }
+        }
         stage('Finish') {
             steps {
                 dir(BASE_DIR) {

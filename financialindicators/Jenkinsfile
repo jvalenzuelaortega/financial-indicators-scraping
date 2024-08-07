@@ -9,14 +9,14 @@ pipeline {
         stage('Build app') {
             steps {
                 dir(BASE_DIR) {
-                    echo 'This is build app Stage'
+                    sh 'gradle build'
                 }
             }
         }
         stage('Test app') {
             steps {
                 dir(BASE_DIR) {
-                    echo 'This is test app Stage'
+                    sh 'gradle test'
                 }
             }
         }

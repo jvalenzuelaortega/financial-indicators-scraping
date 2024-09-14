@@ -1,7 +1,8 @@
 package financialindicators.services;
 
 import financialindicators.config.PropertiesLoaderConfig;
-import financialindicators.dto.output.IndicatorOutputDto;
+import financialindicators.dto.data.IndicatorDataDto;
+import financialindicators.enums.FinancialIndicatorEnum;
 import org.jsoup.nodes.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,54 +16,30 @@ public class ScrapingService {
     Logger logger = LoggerFactory.getLogger(ScrapingService.class);
     PropertiesLoaderConfig propertiesLoaderConfig = new PropertiesLoaderConfig("config.properties");
 
-    public List<IndicatorOutputDto> getAllIndicators(Document document) {
-        List<IndicatorOutputDto> indicators = new ArrayList<>();
+    public List<IndicatorDataDto> getAllIndicators(Document document) {
+        List<IndicatorDataDto> indicators = new ArrayList<>();
+        String[] indicatorNames = FinancialIndicatorEnum.getIndicatorNames();
 
-        IndicatorOutputDto ufIndicator = new IndicatorOutputDto();
-        ufIndicator.setIndicatorName("uf");
-        ufIndicator.setValue(document.getElementById(propertiesLoaderConfig.getProperty("element.uf")).html());
-        ufIndicator.setLocalDate(LocalDate.now());
+        for (String name : indicatorNames) {
+            IndicatorDataDto indicator = new IndicatorDataDto();
+            indicator.setIndicatorName(name);
+            indicator.setValue(document.getElementById(propertiesLoaderConfig.getProperty("element." + name)).html());
+            indicator.setLocalDate(LocalDate.now());
+            indicators.add(indicator);
+        }
 
-        IndicatorOutputDto ivpIndicator = new IndicatorOutputDto();
-        ivpIndicator.setIndicatorName("ivp");
-        ivpIndicator.setValue(document.getElementById(propertiesLoaderConfig.getProperty("element.ivp")).html());
-        ivpIndicator.setLocalDate(LocalDate.now());
-
-        IndicatorOutputDto dollarIndicator = new IndicatorOutputDto();
-        dollarIndicator.setIndicatorName("dollar");
-        dollarIndicator.setValue(document.getElementById(propertiesLoaderConfig.getProperty("element.dollar")).html());
-        dollarIndicator.setLocalDate(LocalDate.now());
-
-        IndicatorOutputDto euroIndicator = new IndicatorOutputDto();
-        euroIndicator.setIndicatorName("euro");
-        euroIndicator.setValue(document.getElementById(propertiesLoaderConfig.getProperty("element.euro")).html());
-        euroIndicator.setLocalDate(LocalDate.now());
-
-        indicators.add(ufIndicator);
-        indicators.add(ivpIndicator);
-        indicators.add(dollarIndicator);
-        indicators.add(euroIndicator);
-
+        logger.info("[getAllIndicators] Indicators found: {}", indicators.size());
         return indicators;
     }
 
     public String getIndicatorByName(Document document, String indicator) {
-        switch (indicator){
-            case "uf":
-                String UFValue = document.getElementById(propertiesLoaderConfig.getProperty("element.uf")).html();
-                return UFValue;
-            case "ipv":
-                String IVPValue = document.getElementById(propertiesLoaderConfig.getProperty("element.ivp")).html();
-                return IVPValue;
-            case "dollar":
-                String observedDollar = document.getElementById(propertiesLoaderConfig.getProperty("element.dollar")).html();
-                return observedDollar;
-            case "euro":
-                String euro = document.getElementById(propertiesLoaderConfig.getProperty("element.euro")).html();
-                return euro;
-            default:
-                return "Site not found";
+        String elementId = propertiesLoaderConfig.getProperty("element." + indicator);
+        if (elementId != null) {
+            return document.getElementById(elementId).html();
         }
+
+        logger.error("[getIndicatorByName] Indicator not found: {}", indicator);
+        return "Site not found";
     }
 
 }

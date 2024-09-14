@@ -9,6 +9,13 @@ public class ResponseDto<T> {
     private String date;
     private T data;
 
+    public ResponseDto(int code, String message, String date, T data) {
+        this.code = code;
+        this.message = message;
+        this.date = date;
+        this.data = data;
+    }
+
     public int getCode() {
         return code;
     }

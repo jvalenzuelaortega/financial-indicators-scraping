@@ -1,12 +1,22 @@
-package financialindicators.dto.output;
+package financialindicators.dto.data;
 
 import java.time.LocalDate;
 
-public class IndicatorOutputDto {
+public class IndicatorDataDto {
 
     private String indicatorName;
     private String value;
     private LocalDate localDate;
+
+    public IndicatorDataDto(String indicatorName, String value, LocalDate localDate) {
+        this.indicatorName = indicatorName;
+        this.value = value;
+        this.localDate = localDate;
+    }
+
+    public IndicatorDataDto() {
+
+    }
 
     public String getIndicatorName() {
         return indicatorName;
@@ -32,12 +42,4 @@ public class IndicatorOutputDto {
         this.localDate = localDate;
     }
 
-    @Override
-    public String toString() {
-        return "IndicatorResponseDto{" +
-                "indicatorName='" + indicatorName + '\'' +
-                ", value='" + value + '\'' +
-                ", localDate=" + localDate +
-                '}';
-    }
 }

@@ -3,7 +3,7 @@ package financialindicators.services;
 import financialindicators.config.JsoupSingletonConfig;
 import financialindicators.config.PropertiesLoaderConfig;
 import financialindicators.dto.ResponseDto;
-import financialindicators.dto.output.IndicatorOutputDto;
+import financialindicators.dto.data.IndicatorDataDto;
 import org.jsoup.nodes.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,35 +25,24 @@ public class DailyIndicatorsService {
     }
 
     public ResponseDto getAllDailyIndicators() throws IOException {
-        ResponseDto responseDto = new ResponseDto();
-
         Document document = JsoupSingletonConfig.getInstance(propertiesLoaderConfig.getProperty("site.url"));
-        List<IndicatorOutputDto> listAllIndicators = scrapingService.getAllIndicators(document);
+        List<IndicatorDataDto> listAllIndicators = scrapingService.getAllIndicators(document);
+        if (listAllIndicators.isEmpty()) {
+            logger.error("No indicators found");
+            return new ResponseDto(404, "No indicators found", LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")), null);
+        }
 
         logger.info("Get all indicators");
-
-        responseDto.setCode(200);
-        responseDto.setMessage("Successfully");
-        responseDto.setDate(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-        responseDto.setData(listAllIndicators);
-
-        return responseDto;
+        return new ResponseDto(200, "Successfully", LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")), listAllIndicators);
     }
 
     public ResponseDto getDailyIndicatorByName(String indicatorName) throws IOException {
-        ResponseDto responseDto = new ResponseDto();
-
         Document document = JsoupSingletonConfig.getInstance(propertiesLoaderConfig.getProperty("site.url"));
         String indicatorValue = scrapingService.getIndicatorByName(document, indicatorName);
 
         logger.info("Value for indicator {} is {}", indicatorName, indicatorValue);
 
-        responseDto.setCode(200);
-        responseDto.setMessage("Successfully");
-        responseDto.setDate(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-        responseDto.setData(indicatorValue);
-
-        return responseDto;
+        return new ResponseDto(200, "Successfully", LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")), indicatorValue);
     }
 
 }

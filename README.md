@@ -53,18 +53,33 @@ To test, execute
 gradle run
 ```
 
-The scrapper's response should be as follows
+Open Postman or HTTPie and run one of the two available URLs
 
 ```
-IndicatorResponseDto{indicatorName='DOLLAR', value=' $ 918', localDate=2024-06-13}
-IndicatorResponseDto{indicatorName='UF', value='$ 37.508,14', localDate=2024-06-13}
+http://localhost:9090/get-all-indicators
+```
+
+```
+http://localhost:9090/get-indicator?indicator=dollar
+```
+In this endpoint you can use as query param: *uf*, *dollar*, *euro* and *ipv*
+
+**Response**
+
+```json
+{"code":200,"message":"Successfully","date":"16/09/2024","data":[{"indicatorName":"uf","value":"37.857,46","localDate":"16/09/2024"},{"indicatorName":"ivp","value":"39.265,44","localDate":"16/09/2024"},{"indicatorName":"dollar","value":"925,61","localDate":"16/09/2024"},{"indicatorName":"euro","value":"1.025,72","localDate":"16/09/2024"}]}
+
+```
+
+```json
+{"code":200,"message":"Successfully","date":"16/09/2024","data":"925,61"}
 ```
 
 ## Built with 🛠️
 
-_Mention the tools you used to create your project_
 
 * [Gradle](https://gradle.org/) - Dependency manager
+* [Javalin](https://javalin.io/) - lightweight java web framework
 
 ## Contributing 🖇️
 

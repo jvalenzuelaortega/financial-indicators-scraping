@@ -76,6 +76,29 @@ jacocoTestReport {
         xml.required = true
         html.required = true
     }
+    
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it,
+                      exclude: [
+                          '**/financialindicators/config/**',
+                          '**/financialindicators/dto/**',
+                          '**/financialindicators/enums/**',
+                          '**/financialindicators/exceptions/**',
+                          '**/financialindicators/App.class'
+                      ])
+        }))
+    }
+}
+
+jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            limit {
+                minimum = 0.80
+            }
+        }
+    }
 }
 
 checkstyle {

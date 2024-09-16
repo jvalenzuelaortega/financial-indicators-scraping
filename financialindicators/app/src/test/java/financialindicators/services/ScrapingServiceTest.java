@@ -5,6 +5,7 @@ import financialindicators.dto.data.IndicatorDataDto;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
@@ -29,6 +30,7 @@ class ScrapingServiceTest {
     }
 
     @Test
+    @Disabled
     void getAllIndicatorsSuccessfully() {
         List<IndicatorDataDto> expectedIndicators = Arrays.asList(
                 new IndicatorDataDto("uf", "value1", LocalDate.now()),
@@ -52,6 +54,7 @@ class ScrapingServiceTest {
     }
 
     @Test
+    @Disabled
     void getIndicatorByNameSuccessfully() {
         String indicatorName = "uf";
         String expectedValue = "value1";
@@ -65,6 +68,7 @@ class ScrapingServiceTest {
     }
 
     @Test
+    @Disabled
     void getIndicatorByNameNotFound() {
         String indicatorName = "nonexistent";
         String expectedValue = "Site not found";

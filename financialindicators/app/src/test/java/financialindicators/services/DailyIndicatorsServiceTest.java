@@ -41,10 +41,10 @@ class DailyIndicatorsServiceTest {
     @Disabled
     void getAllDailyIndicatorsSuccessfully() throws IOException {
         List<IndicatorDataDto> indicators = Arrays.asList(
-                new IndicatorDataDto("uf", "value1", LocalDate.now()),
-                new IndicatorDataDto("ivp", "value2", LocalDate.now()),
-                new IndicatorDataDto("dollar", "value3", LocalDate.now()),
-                new IndicatorDataDto("euro", "value4", LocalDate.now())
+                new IndicatorDataDto("uf", "value1", LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))),
+                new IndicatorDataDto("ivp", "value2", LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))),
+                new IndicatorDataDto("dollar", "value3", LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))),
+                new IndicatorDataDto("euro", "value4", LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")))
         );
 
         //when(JsoupSingletonConfig.getInstance(SCRAPING_URL)).thenReturn(document);

@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +25,7 @@ public class ScrapingService {
             IndicatorDataDto indicator = new IndicatorDataDto();
             indicator.setIndicatorName(name);
             indicator.setValue(document.getElementById(propertiesLoaderConfig.getProperty("element." + name)).html());
-            indicator.setLocalDate(LocalDate.now());
+            indicator.setLocalDate(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
             indicators.add(indicator);
         }
 

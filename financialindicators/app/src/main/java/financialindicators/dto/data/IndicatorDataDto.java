@@ -6,9 +6,9 @@ public class IndicatorDataDto {
 
     private String indicatorName;
     private String value;
-    private LocalDate localDate;
+    private String localDate;
 
-    public IndicatorDataDto(String indicatorName, String value, LocalDate localDate) {
+    public IndicatorDataDto(String indicatorName, String value, String localDate) {
         this.indicatorName = indicatorName;
         this.value = value;
         this.localDate = localDate;
@@ -34,11 +34,11 @@ public class IndicatorDataDto {
         this.value = value;
     }
 
-    public LocalDate getLocalDate() {
+    public String getLocalDate() {
         return localDate;
     }
 
-    public void setLocalDate(LocalDate localDate) {
+    public void setLocalDate(String localDate) {
         this.localDate = localDate;
     }
 

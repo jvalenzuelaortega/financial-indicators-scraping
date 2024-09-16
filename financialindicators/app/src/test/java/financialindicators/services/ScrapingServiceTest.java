@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
 
@@ -33,10 +34,10 @@ class ScrapingServiceTest {
     @Disabled
     void getAllIndicatorsSuccessfully() {
         List<IndicatorDataDto> expectedIndicators = Arrays.asList(
-                new IndicatorDataDto("uf", "value1", LocalDate.now()),
-                new IndicatorDataDto("ivp", "value2", LocalDate.now()),
-                new IndicatorDataDto("dollar", "value3", LocalDate.now()),
-                new IndicatorDataDto("euro", "value4", LocalDate.now())
+                new IndicatorDataDto("uf", "value1", LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))),
+                new IndicatorDataDto("ivp", "value2", LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))),
+                new IndicatorDataDto("dollar", "value3", LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))),
+                new IndicatorDataDto("euro", "value4", LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")))
         );
 
         when(propertiesLoaderConfig.getProperty("element.uf")).thenReturn("ufId");

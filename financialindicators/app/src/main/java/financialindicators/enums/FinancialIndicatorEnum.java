@@ -1,10 +1,13 @@
 package financialindicators.enums;
 
+import java.util.Arrays;
+
 public enum FinancialIndicatorEnum {
 
+    UF("uf"),
+    IPV("ivp"),
     DOLLAR("dollar"),
-    EURO("euro"),
-    UF("uf");
+    EURO("euro");
 
     private final String indicatorName;
 
@@ -12,12 +15,21 @@ public enum FinancialIndicatorEnum {
         this.indicatorName = indicatorName;
     }
 
-    public static FinancialIndicatorEnum getIndicatorByName(String name) {
-        for (FinancialIndicatorEnum indicator : FinancialIndicatorEnum.values()) {
-            if (indicator.indicatorName.equals(name)) {
-                return indicator;
-            }
-        }
-        return null;
+    public String getIndicatorName() {
+        return indicatorName;
     }
+
+    public static String[] getIndicatorNames() {
+        return Arrays.stream(FinancialIndicatorEnum.values())
+                .map(FinancialIndicatorEnum::getIndicatorName)
+                .toArray(String[]::new);
+    }
+
+    public static FinancialIndicatorEnum getIndicatorByName(String name) {
+        return Arrays.stream(FinancialIndicatorEnum.values())
+                .filter(indicator -> indicator.indicatorName.equals(name))
+                .findFirst()
+                .orElse(null);
+    }
+
 }
